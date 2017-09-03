@@ -15,7 +15,7 @@ AMKA (https://www.amka.gr/) is the Greek Social Security Number.
 
 According to http://www.ggka.gr/er_amka_main1.htm (frameset http://www.ggka.gr/er_amka.htm):
 
-> The Greek Social Security Number (AMKA) is an 11-digit string. 
+> The Greek Social Security Number (AMKA) is an 11-digit numeric string. 
 >
 > It is consisted of 3 parts:
 > * the first part is 6-digit and indicates the date of birth (DDMMYY)
