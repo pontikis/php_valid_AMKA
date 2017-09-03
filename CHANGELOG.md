@@ -13,7 +13,7 @@ License [MIT](https://github.com/pontikis/php_valid_AMKA/blob/master/LICENSE)
 Release 0.7.0 (3 Sep 2017)
 -------------------------
 
-* basic functionality
+* basic functionality #1
 
 
 Release 0.1.0 (3 Sep 2017)
