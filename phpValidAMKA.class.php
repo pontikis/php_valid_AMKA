@@ -14,6 +14,10 @@
  */
 class phpValidAMKA {
 	/**
+	 * @var int valid value is 11
+	 */
+	private $amka_length;
+	/**
 	 * @var null|string one of 'male'. 'female'
 	 */
 	private $gender;
@@ -29,6 +33,10 @@ class phpValidAMKA {
 	private $last_error;
 
 	public function __construct(array $options) {
+
+		// initialize ----------------------------------------------------------
+		$this->amka_length = 11;
+
 
 		// options -------------------------------------------------------------
 		$defaults = array(
@@ -70,8 +78,23 @@ class phpValidAMKA {
 	}
 
 	// public functions - main methods -----------------------------------------
+
+	/**
+	 * @param string $amka
+	 * @return bool
+	 */
 	public function validateAMKA($amka) {
 
+		if(strlen($amka) != $this->amka_length) {
+			$this->last_error = 'fatal_invalid_number_of_characters';
+			return false;
+		}
+
+		// allow only digits
+		if(preg_match("/[^\pN]/u", $amka)) {
+			$this->last_error = 'fatal_does_not_consisted_of_digits';
+			return false;
+		}
 
 		return true;
 
