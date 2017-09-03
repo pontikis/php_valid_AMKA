@@ -22,9 +22,17 @@ According to http://www.ggka.gr/er_amka_main1.htm (frameset http://www.ggka.gr/e
 > * the second part is 4-digit and indicates the serial number in the National Registry within the same date of birth. It is an odd number for men and even number for women
 > * the third part is 1 digit (control character).
 
+REMARK: ``DDMMYY`` is ``dmy`` in php (see http://php.net/manual/en/datetime.createfromformat.php)
+
+* ``d`` Day of the month, 2 digits with leading zeros
+* ``m`` Numeric representation of a month, with leading zeros
+* ``y`` A two digit representation of a year (which is assumed to be in the range 1970-2069, inclusive)
+
+Probably, "two digit representation of a year" was not a good idea. Moreover, it is a reason why this class does not check if first 6 digits represent a future date (just exactly because this is happens for all AMKA before 1970).
+
 ## PHP version
 
-(PHP 5 >= 5.2.0, PHP 7)
+(PHP 5 >= 5.3.0, PHP 7)
 
 ## Files
  
