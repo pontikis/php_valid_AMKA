@@ -85,14 +85,15 @@ class phpValidAMKA {
 	 */
 	public function validateAMKA($amka) {
 
+		// validate number of characters
 		if(strlen($amka) != $this->amka_length) {
-			$this->last_error = 'fatal_invalid_number_of_characters';
+			$this->last_error = 'fatal_error_invalid_number_of_characters';
 			return false;
 		}
 
 		// allow only digits
 		if(preg_match("/[^\pN]/u", $amka)) {
-			$this->last_error = 'fatal_does_not_consisted_of_digits';
+			$this->last_error = 'fatal_error_does_not_consisted_of_digits';
 			return false;
 		}
 
