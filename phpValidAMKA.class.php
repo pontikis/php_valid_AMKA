@@ -25,14 +25,14 @@ class phpValidAMKA {
 	 * @var null|string DDMMYY
 	 */
 	private $date_of_birth;
-	/**
-	 * @var null|integer (a positive integer)
-	 */
-	private $date_of_birth_years_ago;
 
 	private $last_error;
 
-	public function __construct(array $options) {
+	/**
+	 * phpValidAMKA constructor.
+	 * @param array $options
+	 */
+	public function __construct($options = array()) {
 
 		// initialize ----------------------------------------------------------
 		$this->amka_length = 11;
@@ -41,8 +41,7 @@ class phpValidAMKA {
 		// options -------------------------------------------------------------
 		$defaults = array(
 			'gender' => null,
-			'date_of_birth' => null,
-			'date_of_birth_years_ago' => 120
+			'date_of_birth' => null
 		);
 
 		$opt = array_merge($defaults, $options);
@@ -50,10 +49,21 @@ class phpValidAMKA {
 		// optional
 		$this->gender = $opt['gender'];
 		$this->date_of_birth = $opt['date_of_birth'];
-		$this->date_of_birth_years_ago = $opt['date_of_birth_years_ago'];
 
 		// error ---------------------------------------------------------------
 		$this->last_error = null;
+
+		if($this->gender) {
+			if(!in_array($this->gender, array('male', 'female'))) {
+				$this->last_error = 'invalid_parameter_gender';
+			}
+		}
+
+		if($this->date_of_birth) {
+			if(!$this->_isValidDateString($this->date_of_birth)) {
+				$this->last_error = 'invalid_parameter_date_of_birth';
+			}
+		}
 
 	}
 
@@ -62,7 +72,6 @@ class phpValidAMKA {
 	public function getLastError() {
 		return $this->last_error;
 	}
-
 
 
 	// public functions - setters ----------------------------------------------
@@ -97,10 +106,66 @@ class phpValidAMKA {
 			return false;
 		}
 
+		// check first part (date of birth)
+		if($this->date_of_birth) {
+			if($this->date_of_birth != (substr($amka, 0, 6))) {
+				$this->last_error = 'error_amka_first_part_given_date_of_birth_does_not_match';
+				return false;
+			}
+		} else {
+			if(!$this->_isValidDateString(substr($amka, 0, 6))) {
+				$this->last_error = 'error_amka_first_part_invalid_date_of_birth';
+				return false;
+			}
+		}
+
+		// check second part
+		if($this->gender) {
+			switch($this->gender) {
+				case 'male':
+					if(!$this->_is_odd(substr($amka, 6, 4))) {
+						$this->last_error = 'error_amka_second_part_even_in_male';
+						return false;
+					}
+					break;
+				case 'female':
+					if($this->_is_odd(substr($amka, 6, 4))) {
+						$this->last_error = 'error_amka_second_part_odd_in_female';
+						return false;
+					}
+					break;
+			}
+		}
+
 		return true;
 
 	}
 
+	// private functions -------------------------------------------------------
 
+
+	/**
+	 * Check if a string is a valid date(time)
+	 *
+	 * DateTime::createFromFormat requires PHP >= 5.3
+	 *
+	 * @param string $str_dt
+	 * @return bool|int
+	 */
+	private function _isValidDateString($str_dt) {
+		$date = DateTime::createFromFormat('dmy', $str_dt, new DateTimeZone('Europe/Athens'));
+		$a_err = DateTime::getLastErrors(); // compatibility with php 5.3
+		return $date && $a_err['warning_count'] == 0 && $a_err['error_count'] == 0;
+	}
+
+	/**
+	 * @param $x
+	 * @return bool
+	 */
+	private function _is_odd($x) {
+		return ($x % 2 === 0) ? false : true;
+	}
 
 }
+
+
