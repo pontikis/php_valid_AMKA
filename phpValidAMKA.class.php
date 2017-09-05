@@ -9,7 +9,7 @@
  * @author     Christos Pontikis http://pontikis.net
  * @copyright  Christos Pontikis
  * @license    MIT http://opensource.org/licenses/MIT
- * @version    0.7.0 (03 Sep 2017)
+ * @version    0.1.0 (05 Sep 2017)
  *
  */
 class phpValidAMKA {
