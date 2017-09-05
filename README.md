@@ -45,3 +45,52 @@ See ``docs/doxygen/html`` for html documentation of ``phpValidAMKA`` class.
 
 ## How to use
 
+
+```php
+require_once '/path/to/phpValidAMKA.class.php';
+
+$options = array(
+	'gender' => 'male', // optional
+	'date_of_birth' => '230384' // (March 23, 1984) optional
+);
+
+$valid_amka = new phpValidAMKA($options);
+
+if($valid_amka->getLastError()) {
+	switch($valid_amka->getLastError()) {
+		case 'invalid_parameter_gender':
+			echo 'Invalid parameter [gender] is passed. AMKA cannot be validated';
+			break;
+		case 'invalid_parameter_date_of_birth':
+			echo 'Invalid parameter [date of birth] is passed. AMKA cannot be validated';
+			break;
+	}
+
+} else {
+
+	$valid_amka->validateAMKA($social_security_number);
+
+	if($valid_amka->getLastError()) {
+		switch($valid_amka->getLastError()) {
+			case 'fatal_error_invalid_number_of_characters':
+				echo 'Given AMKA is not consisted of 11 digits';
+				break;
+			case 'fatal_error_does_not_consisted_of_digits':
+				echo 'Given AMKA contains invalid characters. Only digits are permitted';
+				break;
+			case 'error_amka_first_part_given_date_of_birth_does_not_match':
+				echo 'Patient date of birth is different than date of birth declared by AMKA';
+				break;
+			case 'error_amka_first_part_invalid_date_of_birth':
+				echo 'Date of birth declared by given AMKA is invalid';
+				break;
+			case 'error_amka_second_part_even_in_male':
+				echo 'Patient gender is male while female is declared by given AMKA';
+				break;
+			case 'error_amka_second_part_odd_in_female':
+				echo 'Patient gender is female while male is declared by given AMKA';
+				break;
+		}
+	}
+}
+```
