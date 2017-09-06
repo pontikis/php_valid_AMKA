@@ -78,12 +78,16 @@ if($valid_amka->getLastError()) {
 			case 'fatal_error_does_not_consisted_of_digits':
 				echo 'Given AMKA contains invalid characters. Only digits are permitted';
 				break;
-			case 'error_amka_first_part_given_date_of_birth_does_not_match':
-				echo 'Patient date of birth is different than date of birth declared by AMKA';
-				break;
 			case 'error_amka_first_part_invalid_date_of_birth':
 				echo 'Date of birth declared by given AMKA is invalid';
 				break;
+
+			// if $option['date_of_birth'] has been given	
+			case 'error_amka_first_part_given_date_of_birth_does_not_match':
+				echo 'Patient date of birth is different than date of birth declared by AMKA';
+				break;
+
+			// if $option['gender'] has been given
 			case 'error_amka_second_part_even_in_male':
 				echo 'Patient gender is male while female is declared by given AMKA';
 				break;

@@ -107,14 +107,14 @@ class phpValidAMKA {
 		}
 
 		// check first part (date of birth)
+		if(!$this->_isValidDateString(substr($amka, 0, 6))) {
+			$this->last_error = 'error_amka_first_part_invalid_date_of_birth';
+			return false;
+		}
+
 		if($this->date_of_birth) {
 			if($this->date_of_birth != (substr($amka, 0, 6))) {
 				$this->last_error = 'error_amka_first_part_given_date_of_birth_does_not_match';
-				return false;
-			}
-		} else {
-			if(!$this->_isValidDateString(substr($amka, 0, 6))) {
-				$this->last_error = 'error_amka_first_part_invalid_date_of_birth';
 				return false;
 			}
 		}
