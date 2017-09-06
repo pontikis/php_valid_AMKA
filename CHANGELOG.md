@@ -10,7 +10,7 @@ Project page https://github.com/pontikis/php_valid_AMKA
 License [MIT](https://github.com/pontikis/php_valid_AMKA/blob/master/LICENSE)
 
 
-Release 0.7.1 (5 Sep 2017)
+Release 0.7.1 (6 Sep 2017)
 -------------------------
 
 * improve docs
